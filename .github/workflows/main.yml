@@ -19,7 +19,9 @@ jobs:
           Invoke-WebRequest -Uri "https://releases.hashicorp.com/terraform/1.7.0/terraform_1.7.0_windows_amd64.zip" -OutFile "terraform.zip"
           Expand-Archive -Path "terraform.zip" -DestinationPath "C:\terraform"
           echo "C:\terraform" | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
+          $env:Path += ";C:\terraform"
           terraform --version
+
 
       - name: Install Python Dependencies
         run: |
