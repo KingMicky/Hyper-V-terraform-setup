@@ -1,0 +1,45 @@
+name: Hyper-V VM Setup
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  setup-hyperv-vm:
+    runs-on: windows-latest  # GitHub-hosted Windows runner
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Terraform
+        run: |
+          Invoke-WebRequest -Uri "https://releases.hashicorp.com/terraform/1.7.0/terraform_1.7.0_windows_amd64.zip" -OutFile "terraform.zip"
+          Expand-Archive -Path "terraform.zip" -DestinationPath "C:\terraform"
+          echo "C:\terraform" | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
+          terraform --version
+
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install paramiko
+
+      - name: Initialize and Apply Terraform
+        working-directory: terraform
+        run: |
+          terraform init
+          terraform apply -auto-approve
+
+      - name: Get VM IP Address
+        id: get-vm-ip
+        working-directory: terraform
+        run: |
+          $vm_ip = terraform output -raw vm_ip
+          echo "VM_IP=$vm_ip" | Out-File -Append -Encoding utf8 $env:GITHUB_ENV
+
+      - name: Install Dependencies on VM
+        env:
+          VM_IP: ${{ env.VM_IP }}
+        run: python setup_vm.py
