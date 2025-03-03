@@ -8,7 +8,7 @@ on:
 
 jobs:
   setup-hyperv-vm:
-    runs-on: windows-latest  # GitHub-hosted Windows runner
+    runs-on: windows-latest  
     
     steps:
       - name: Checkout repository
