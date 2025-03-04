@@ -8,7 +8,7 @@ on:
 
 jobs:
   setup-hyperv-vm:
-    runs-on: self-hosted  # Uses a self-hosted Windows runner
+    runs-on: self-hosted 
 
     steps:
       - name: Checkout repository
