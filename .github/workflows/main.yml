@@ -1,4 +1,4 @@
-name: Hyper-V VM Setup
+name: Hyper-V VM Setup (Self-Hosted)
 
 on:
   push:
@@ -8,25 +8,21 @@ on:
 
 jobs:
   setup-hyperv-vm:
-    runs-on: self-hosted 
-    
+    runs-on: self-hosted  # Uses a self-hosted Windows runner
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Terraform
+      - name: Verify Terraform Installation
         run: |
-          Invoke-WebRequest -Uri "https://releases.hashicorp.com/terraform/1.7.0/terraform_1.7.0_windows_amd64.zip" -OutFile "terraform.zip"
-          Expand-Archive -Path "terraform.zip" -DestinationPath "C:\terraform"
-          echo "C:\terraform" | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
-          $env:Path += ";C:\terraform"
           terraform --version
 
-
-      - name: Install Python Dependencies
+      - name: Verify Python Installation
         run: |
-          python -m pip install --upgrade pip
-          pip install paramiko
+          python --version
+          pip install --upgrade pip
+          pip install -r requirements.txt  # Ensure dependencies are installed
 
       - name: Initialize and Apply Terraform
         working-directory: terraform
