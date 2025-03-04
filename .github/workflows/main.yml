@@ -25,8 +25,8 @@ jobs:
       - name: Verify Python Installation
         run: |
           python --version
-          pip install --upgrade pip
-          pip install -r requirements.txt 
+          pip install paramiko
+          pip install flask request 
 
       - name: Initialize and Apply Terraform
         working-directory: terraform
