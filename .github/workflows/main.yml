@@ -24,7 +24,10 @@ jobs:
 
       - name: Verify Python Installation
         run: |
+          choco install python -y
+          refreshenv
           python --version
+          pip install --upgrade pip
           pip install paramiko
           pip install flask request 
 
