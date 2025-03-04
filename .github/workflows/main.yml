@@ -26,7 +26,7 @@ jobs:
         run: |
           python --version
           pip install --upgrade pip
-          pip install -r requirements.txt  # Ensure dependencies are installed
+          pip install -r requirements.txt 
 
       - name: Initialize and Apply Terraform
         working-directory: terraform
