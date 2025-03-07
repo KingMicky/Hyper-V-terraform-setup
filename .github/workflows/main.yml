@@ -27,7 +27,7 @@ jobs:
           python --version
           pip install --upgrade pip
           pip install paramiko
-          pip install flask request 
+          pip install flask requests 
 
       - name: Initialize and Apply Terraform
         working-directory: terraform
