@@ -1,4 +1,4 @@
-name: Hyper-V VM Setup (Self-Hosted)
+name: Hyper-V VM Setup
 
 on:
   push:
